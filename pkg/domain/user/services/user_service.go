@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/user"
-	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/user/repository"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/repository"
 )
 
 type UserService interface {

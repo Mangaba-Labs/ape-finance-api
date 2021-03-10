@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/database"
-	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/user"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/database"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user"
 	"gorm.io/gorm"
 )
 

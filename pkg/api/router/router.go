@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/Mangaba-Labs/tempoo-api/pkg/api/handler"
-	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/user/services"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/api/handler"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/services"
 	"github.com/gofiber/fiber/v2"
 )
 

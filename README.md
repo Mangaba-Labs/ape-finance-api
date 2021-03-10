@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/Mangaba-Labs/tempoo-api)](https://goreportcard.com/report/github.com/Mangaba-Labs/tempoo-api)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Mangaba-Labs/ape-finance-api)](https://goreportcard.com/report/github.com/Mangaba-Labs/ape-finance-api)
 
 # ape-finance-api ⛅ ☀️ 🌦️
 

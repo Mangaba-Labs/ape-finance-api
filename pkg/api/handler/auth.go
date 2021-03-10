@@ -4,8 +4,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/user"
-	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/user/services"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/services"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/dgrijalva/jwt-go"

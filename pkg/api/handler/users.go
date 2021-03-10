@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/user"
-	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/user/services"
-	"github.com/gofiber/fiber/v2"
 	"strconv"
+
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/services"
+	"github.com/gofiber/fiber/v2"
 )
 
 type UserHandler interface {
