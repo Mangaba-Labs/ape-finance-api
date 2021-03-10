@@ -1,4 +1,4 @@
-module github.com/Mangaba-Labs/tempoo-api
+module github.com/Mangaba-Labs/ape-finance-api
 
 // +heroku goVersion go1.15
 go 1.15
