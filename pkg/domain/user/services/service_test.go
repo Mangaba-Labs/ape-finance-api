@@ -1,0 +1,65 @@
+package services
+
+import (
+	"errors"
+	"fmt"
+	"github.com/Mangaba-Labs/tempoo-api/mocks"
+	"github.com/Mangaba-Labs/tempoo-api/pkg/domain/user"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"gorm.io/gorm"
+	"testing"
+)
+
+
+func TestService(t *testing.T){
+	t.Run("get an valid user by e-mail", func(t *testing.T) {
+		expectedResult := user.User{
+			Email:    "matheus.cumpian@hotmail.com",
+			Name:     "Matheus Cumpian",
+			Password: "20012000",
+		}
+
+		mockedRepository := &mocks.UserRepository{}
+
+		mockedRepository.On("FindOneByEmail", mock.Anything).Return(user.User{
+			Model:    gorm.Model{},
+			Email:    "matheus.cumpian@hotmail.com",
+			Name:     "Matheus Cumpian",
+			Password: "20012000",
+		}, nil)
+
+		userService := Service{
+			Repository: mockedRepository,
+		}
+
+		result, err := userService.GetUserByEmail("matheus.cumpian@gmail.com")
+
+		assert.Nil(t, err, "findByEmail should not throw error")
+		assert.Equal(t, result, expectedResult, "wrong result")
+	})
+
+	t.Run("get an invalid user by e-mail", func (t *testing.T) {
+		expectedResult := user.User{}
+
+		mockedRepository := &mocks.UserRepository{}
+
+		mockedRepository.On("FindOneByEmail", mock.Anything).Return(user.User{}, errors.New("user does not exists"))
+
+		userService := Service{
+			Repository: mockedRepository,
+		}
+
+		fakeEmail := "matheus.cumpian@hotmail.com"
+
+		result, err := userService.GetUserByEmail(fakeEmail)
+
+		assert.Equal(t, result, expectedResult, "user must be empty")
+		assert.NotNil(t, err, "must return error")
+		assert.Equal(t, err.Error(), fmt.Sprintf("cannot find usr %s on database", fakeEmail))
+	})
+}
+
+
+
+
