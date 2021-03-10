@@ -1,56 +1,55 @@
-version: '3'
-services: 
+version: "3"
+services:
   api:
-    container_name: tempoo_api
-    image: mcumpian/tempoo
+    container_name: ape-finance-api
+    image: artsantana/ape-finance-api
     build: .
     ports:
       - 8080:8080
     restart: on-failure
-    volumes: 
+    volumes:
       - api:/usr/src/app
-    depends_on: 
-      - db
-    networks: 
-      - tempoo
+    depends_on:
+      - db-ape-finance
+    networks:
+      - ape
     env_file:
       - .env
 
-  db:
+  db-ape-finance:
     image: postgres:latest
-    container_name: postgres_db
+    container_name: postgres-db-ape
     environment:
-      - POSTGRES_USER=${DB_USER}  
+      - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
-      - DATABASE_HOST=${DB_HOST} 
+      - DATABASE_HOST=${DB_HOST}
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
       - database_postgres:/var/lib/postgresql/data
     networks:
-      - tempoo
-    
-  pgadmin:
+      - ape
+
+  pgadmin-ape-finance:
     image: dpage/pgadmin4
-    container_name: pgadmin_container
+    container_name: pgadmin-container-ape
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     depends_on:
-      - db
+      - db-ape-finance
     ports:
       - "5050:80"
     networks:
-      - tempoo
+      - ape
     restart: unless-stopped
 
 volumes:
   api:
-  database_postgres:                  
+  database_postgres:
 
 # Networks to be created to facilitate communication between containers
 networks:
-  tempoo:
+  ape:
     driver: bridge
-

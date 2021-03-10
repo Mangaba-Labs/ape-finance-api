@@ -1,7 +1,7 @@
 # Stage 1
 FROM golang:alpine as builder
 
-LABEL mainteiner="Matheus Cumpian <matheus.cumpian@hotmail.com>"
+LABEL mainteiner="Arthur Santana <artsantana1457@gmail.com>"
 
 RUN apk update && apk add --no-cache git
 RUN mkdir /build 
