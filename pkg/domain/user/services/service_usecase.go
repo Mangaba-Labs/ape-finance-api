@@ -9,6 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// Service struct
 type Service struct {
 	Repository repository.UserRepository
 }
@@ -40,6 +41,7 @@ func (s Service) CreateUser(usr *user.User) (*user.Response, error) {
 	}, nil
 }
 
+// UpdateUser service
 func (s Service) UpdateUser(user *user.User, id int) (err error) {
 	result, err := s.Repository.FindOneByEmail(user.Email)
 
@@ -55,6 +57,7 @@ func (s Service) UpdateUser(user *user.User, id int) (err error) {
 	return
 }
 
+// UpdateUserPassword changes user password
 func (s Service) UpdateUserPassword(user *user.User, id int) (err error) {
 	result, err := s.Repository.FindOneByEmail(user.Email)
 
@@ -69,6 +72,7 @@ func (s Service) UpdateUserPassword(user *user.User, id int) (err error) {
 	return
 }
 
+// DeleteUser from application
 func (s Service) DeleteUser(id int) error {
 	err := s.Repository.Delete(id)
 
@@ -79,6 +83,7 @@ func (s Service) DeleteUser(id int) error {
 	return nil
 }
 
+// GetUserByEmail find the user using his email
 func (s Service) GetUserByEmail(email string) (usr user.User, err error) {
 	usr, err = s.Repository.FindOneByEmail(email)
 
@@ -90,8 +95,9 @@ func (s Service) GetUserByEmail(email string) (usr user.User, err error) {
 	return
 }
 
-func (s Service) GetUserById(id int) (usr user.User, err error) {
-	usr, err = s.Repository.FindById(id)
+// GetUserByID find the user using his ID
+func (s Service) GetUserByID(id int) (usr user.User, err error) {
+	usr, err = s.Repository.FindByID(id)
 
 	if err != nil {
 		errMessage := fmt.Sprintf("cannot find usr %d on database", id)

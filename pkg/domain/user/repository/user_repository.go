@@ -10,7 +10,7 @@ import (
 type UserRepository interface {
 	FindAll() (users *gorm.DB, err error)
 	FindOneByEmail(email string) (user user.User, err error)
-	FindById(id int) (user user.User, err error)
+	FindByID(id int) (user user.User, err error)
 	Create(user *user.User) error
 	Delete(id int) error
 }

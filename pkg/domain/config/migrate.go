@@ -7,10 +7,12 @@ import (
 	"gorm.io/gorm"
 )
 
+// Migrate struct for database
 type Migrate struct {
 	DB *gorm.DB
 }
 
+// MigrateAll database migration
 func (m *Migrate) MigrateAll() (err error) {
 	log.Println("Migrating database... 🤞")
 	err = m.DB.AutoMigrate(&user.User{})

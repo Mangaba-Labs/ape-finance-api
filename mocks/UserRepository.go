@@ -66,7 +66,7 @@ func (_m *UserRepository) FindAll() (*gorm.DB, error) {
 }
 
 // FindById provides a mock function with given fields: id
-func (_m *UserRepository) FindById(id int) (user.User, error) {
+func (_m *UserRepository) FindByID(id int) (user.User, error) {
 	ret := _m.Called(id)
 
 	var r0 user.User
