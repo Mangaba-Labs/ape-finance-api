@@ -4,18 +4,18 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/model"
+
 	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/repository"
 	"golang.org/x/crypto/bcrypt"
 )
 
-// Service struct
 type Service struct {
 	Repository repository.UserRepository
 }
 
 // CreateUser on app
-func (s Service) CreateUser(usr *user.User) (*user.Response, error) {
+func (s Service) CreateUser(usr *model.User) (*model.Response, error) {
 	_, err := s.Repository.FindOneByEmail(usr.Email)
 
 	// err == nil means that we find an usr with this e-mail on db
@@ -35,14 +35,13 @@ func (s Service) CreateUser(usr *user.User) (*user.Response, error) {
 		return nil, err
 	}
 
-	return &user.Response{
+	return &model.Response{
 		Email: usr.Email,
 		Name:  usr.Name,
 	}, nil
 }
 
-// UpdateUser service
-func (s Service) UpdateUser(user *user.User, id int) (err error) {
+func (s Service) UpdateUser(user *model.User, id int) (err error) {
 	result, err := s.Repository.FindOneByEmail(user.Email)
 
 	if err != nil {
@@ -57,8 +56,7 @@ func (s Service) UpdateUser(user *user.User, id int) (err error) {
 	return
 }
 
-// UpdateUserPassword changes user password
-func (s Service) UpdateUserPassword(user *user.User, id int) (err error) {
+func (s Service) UpdateUserPassword(user *model.User, id int) (err error) {
 	result, err := s.Repository.FindOneByEmail(user.Email)
 
 	if err != nil {
@@ -72,7 +70,6 @@ func (s Service) UpdateUserPassword(user *user.User, id int) (err error) {
 	return
 }
 
-// DeleteUser from application
 func (s Service) DeleteUser(id int) error {
 	err := s.Repository.Delete(id)
 
@@ -83,25 +80,23 @@ func (s Service) DeleteUser(id int) error {
 	return nil
 }
 
-// GetUserByEmail find the user using his email
-func (s Service) GetUserByEmail(email string) (usr user.User, err error) {
+func (s Service) GetUserByEmail(email string) (usr model.User, err error) {
 	usr, err = s.Repository.FindOneByEmail(email)
 
 	if err != nil {
 		errMessage := fmt.Sprintf("cannot find usr %s on database", email)
-		return user.User{}, errors.New(errMessage)
+		return model.User{}, errors.New(errMessage)
 	}
 
 	return
 }
 
-// GetUserByID find the user using his ID
-func (s Service) GetUserByID(id int) (usr user.User, err error) {
-	usr, err = s.Repository.FindByID(id)
+func (s Service) GetUserById(id int) (usr model.User, err error) {
+	usr, err = s.Repository.FindById(id)
 
 	if err != nil {
 		errMessage := fmt.Sprintf("cannot find usr %d on database", id)
-		return user.User{}, errors.New(errMessage)
+		return model.User{}, errors.New(errMessage)
 	}
 
 	return

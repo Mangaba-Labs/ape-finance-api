@@ -3,7 +3,8 @@ package repository
 import (
 	"errors"
 
-	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/model"
+
 	"gorm.io/gorm"
 )
 
@@ -12,36 +13,33 @@ type Repository struct {
 	DB *gorm.DB // this can be any gorm instance
 }
 
-// FindAll repository implementation
-func (r Repository) FindAll() (users *gorm.DB, err error) {
-	users = r.DB.Find(&users)
-	err = users.Error
+// FindAll find the users in DB
+func (r Repository) FindAll() (users []model.User, err error) {
+	result := r.DB.Find(&users)
+	err = result.Error
 	return
 }
 
-// FindOneByEmail repository implementation
-func (r Repository) FindOneByEmail(email string) (user user.User, err error) {
+func (r Repository) FindOneByEmail(email string) (user model.User, err error) {
 	result := r.DB.First(&user, "email = ?", email)
 	err = result.Error
 	return
 }
 
-// FindByID repository implementation
-func (r Repository) FindByID(id int) (user user.User, err error) {
+func (r Repository) FindById(id int) (user model.User, err error) {
 	result := r.DB.First(&user, "id = ?", id)
 	err = result.Error
 	return
 }
 
-// Delete repository implementation
+// Delete removes a user in DB
 func (r Repository) Delete(id int) (err error) {
-	result := r.DB.Delete(user.User{}, "id = ?", id)
+	result := r.DB.Delete(&model.User{}, "id = ?", id)
 	err = result.Error
 	return
 }
 
-// Create repository implementation
-func (r Repository) Create(user *user.User) error {
+func (r Repository) Create(user *model.User) error {
 	result := r.DB.Create(user)
 	err := result.Error
 	rowsCount := result.RowsAffected

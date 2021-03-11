@@ -9,7 +9,8 @@ import (
 	"gorm.io/gorm"
 )
 
-type databaseConfig struct {
+// Config type represents the db connection string
+type Config struct {
 	host     string
 	user     string
 	password string
@@ -18,16 +19,18 @@ type databaseConfig struct {
 	sslMode  string
 }
 
-var Instance *gorm.DB
-
 // ConnectDatabase creates the connection with postgres
-func ConnectDatabase() {
-	dbConfig := setupDatabase()
+func NewDatabase() (*gorm.DB, error) {
+	dbConfig := SetupDatabase()
 	p := dbConfig.port
 	port, err := strconv.ParseUint(p, 10, 32)
 
+	if err != nil {
+		return nil, err
+	}
+
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dbConfig.host, port, dbConfig.user, dbConfig.password, dbConfig.name, dbConfig.sslMode)
-	Instance, err = gorm.Open(postgres.New(postgres.Config{
+	instance, err := gorm.Open(postgres.New(postgres.Config{
 		DSN:                  dsn,
 		PreferSimpleProtocol: true, // disables implicit prepared statement usage
 	}), &gorm.Config{})
@@ -36,11 +39,12 @@ func ConnectDatabase() {
 		panic("failed to connect database")
 	}
 
-	return
+	return instance, nil
 }
 
-func setupDatabase() *databaseConfig {
-	return &databaseConfig{
+// SetupDatabase returns an databaseConfig pointer
+func SetupDatabase() *Config {
+	return &Config{
 		host:     os.Getenv("DB_HOST"),
 		user:     os.Getenv("DB_USER"),
 		password: os.Getenv("DB_PASSWORD"),

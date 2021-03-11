@@ -1,23 +1,22 @@
 package repository
 
 import (
-	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/database"
-	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/model"
 	"gorm.io/gorm"
 )
 
 // UserRepository Contract
 type UserRepository interface {
-	FindAll() (users *gorm.DB, err error)
-	FindOneByEmail(email string) (user user.User, err error)
-	FindByID(id int) (user user.User, err error)
-	Create(user *user.User) error
+	FindAll() (users []model.User, err error)
+	FindOneByEmail(email string) (user model.User, err error)
+	FindById(id int) (user model.User, err error)
+	Create(user *model.User) error
 	Delete(id int) error
 }
 
 //NewUserRepository repository postgres implementation
-func NewUserRepository() UserRepository {
+func NewUserRepository(db *gorm.DB) UserRepository {
 	return &Repository{
-		DB: database.Instance,
+		DB: db,
 	}
 }
