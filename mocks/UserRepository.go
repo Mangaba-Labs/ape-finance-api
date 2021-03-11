@@ -63,8 +63,8 @@ func (_m *UserRepository) FindAll() ([]model.User, error) {
 	return r0, r1
 }
 
-// FindById provides a mock function with given fields: id
-func (_m *UserRepository) FindById(id int) (model.User, error) {
+// FindByID provides a mock function with given fields: id
+func (_m *UserRepository) FindByID(id int) (model.User, error) {
 	ret := _m.Called(id)
 
 	var r0 model.User

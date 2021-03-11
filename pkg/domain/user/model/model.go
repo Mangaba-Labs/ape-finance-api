@@ -23,13 +23,13 @@ type AuthResponse struct {
 	Token string `json:"token"`
 }
 
-// UserResponse handles data for POST in /user
+// Response handles data for POST in /user
 type Response struct {
 	Email string `json:"email"`
 	Name  string `json:"name"`
 }
 
-// UserRequest handles data for PUT/POST in /users
+// Request handles data for PUT/POST in /users
 type Request struct {
 	ID    uint   `json:"id"`
 	Email string `json:"email"`

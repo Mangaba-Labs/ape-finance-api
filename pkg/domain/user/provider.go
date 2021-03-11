@@ -7,6 +7,7 @@ import (
 	"github.com/google/wire"
 )
 
+// Set wire for user
 var Set = wire.NewSet(
 	repository.NewUserRepository,
 	repository.Set,

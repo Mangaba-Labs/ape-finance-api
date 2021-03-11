@@ -26,7 +26,7 @@ func (r Repository) FindOneByEmail(email string) (user model.User, err error) {
 	return
 }
 
-func (r Repository) FindById(id int) (user model.User, err error) {
+func (r Repository) FindByID(id int) (user model.User, err error) {
 	result := r.DB.First(&user, "id = ?", id)
 	err = result.Error
 	return

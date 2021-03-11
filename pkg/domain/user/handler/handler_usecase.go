@@ -60,7 +60,7 @@ func (h *Handler) GetUser(c *fiber.Ctx) error {
 
 	var usr model.User
 
-	usr, err = h.service.GetUserById(id)
+	usr, err = h.service.GetUserByID(id)
 
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"status": "error", "message": "Cannot get user"})

@@ -11,7 +11,7 @@ type UserService interface {
 	UpdateUser(user *model.User, id int) error
 	DeleteUser(id int) error
 	GetUserByEmail(email string) (user model.User, err error)
-	GetUserById(id int) (user model.User, err error)
+	GetUserByID(id int) (user model.User, err error)
 }
 
 // NewUserService returns a UserService implementation

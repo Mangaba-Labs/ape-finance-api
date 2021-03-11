@@ -85,7 +85,7 @@ func TestRepository(t *testing.T) {
 	})
 
 	t.Run("Find user by id", func(t *testing.T) {
-		user, err := r.FindById(1)
+		user, err := r.FindByID(1)
 
 		assert.Nil(t, err, "cannot find user")
 

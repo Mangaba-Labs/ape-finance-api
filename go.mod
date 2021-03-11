@@ -10,13 +10,14 @@ require (
 	github.com/gofiber/helmet/v2 v2.1.0
 	github.com/gofiber/jwt/v2 v2.1.0
 	github.com/gofrs/uuid v4.0.0+incompatible // indirect
+	github.com/google/wire v0.5.0
 	github.com/jackc/pgmock v0.0.0-20201204152224-4fe30f7445fd // indirect
 	github.com/jackc/pgproto3/v2 v2.0.7 // indirect
 	github.com/joho/godotenv v1.3.0
 	github.com/klauspost/compress v1.11.4 // indirect
 	github.com/kr/text v0.2.0 // indirect
-	github.com/lib/pq v1.9.0 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
+	github.com/lib/pq v1.9.0
+	github.com/ory/dockertest/v3 v3.6.3
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/valyala/fasthttp v1.19.0 // indirect

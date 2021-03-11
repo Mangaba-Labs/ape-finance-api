@@ -3,7 +3,7 @@ package config
 import (
 	"log"
 
-	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user"
+	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/model"
 	"gorm.io/gorm"
 )
 
@@ -15,7 +15,8 @@ type Migrate struct {
 // MigrateAll database migration
 func (m *Migrate) MigrateAll() (err error) {
 	log.Println("Migrating database... 🤞")
-	err = m.DB.AutoMigrate(&user.User{})
+	// err = m.DB.AutoMigrate(&user.User{})
+	err = m.DB.AutoMigrate(&model.User{})
 
 	if err != nil {
 		log.Fatal("Something went wrong on db migration process...\n ", err)

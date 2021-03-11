@@ -1,11 +1,13 @@
 package config
 
 import (
-	"github.com/joho/godotenv"
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
+// SetupEnvVars setup our environment variables
 func SetupEnvVars() {
 	if os.Getenv("ENV") != "PRODUCTION" {
 		if err := godotenv.Load(".env"); err != nil {

@@ -70,8 +70,8 @@ func (_m *UserService) GetUserByEmail(email string) (model.User, error) {
 	return r0, r1
 }
 
-// GetUserById provides a mock function with given fields: id
-func (_m *UserService) GetUserById(id int) (model.User, error) {
+// GetUserByID provides a mock function with given fields: id
+func (_m *UserService) GetUserByID(id int) (model.User, error) {
 	ret := _m.Called(id)
 
 	var r0 model.User

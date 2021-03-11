@@ -91,8 +91,8 @@ func (s Service) GetUserByEmail(email string) (usr model.User, err error) {
 	return
 }
 
-func (s Service) GetUserById(id int) (usr model.User, err error) {
-	usr, err = s.Repository.FindById(id)
+func (s Service) GetUserByID(id int) (usr model.User, err error) {
+	usr, err = s.Repository.FindByID(id)
 
 	if err != nil {
 		errMessage := fmt.Sprintf("cannot find usr %d on database", id)

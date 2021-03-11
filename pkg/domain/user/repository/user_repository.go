@@ -9,7 +9,7 @@ import (
 type UserRepository interface {
 	FindAll() (users []model.User, err error)
 	FindOneByEmail(email string) (user model.User, err error)
-	FindById(id int) (user model.User, err error)
+	FindByID(id int) (user model.User, err error)
 	Create(user *model.User) error
 	Delete(id int) error
 }
