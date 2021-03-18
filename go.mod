@@ -6,6 +6,7 @@ go 1.15
 require (
 	github.com/andybalholm/brotli v1.0.1 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/form3tech-oss/jwt-go v3.2.2+incompatible
 	github.com/gofiber/fiber/v2 v2.3.2
 	github.com/gofiber/helmet/v2 v2.1.0
 	github.com/gofiber/jwt/v2 v2.1.0
@@ -17,6 +18,7 @@ require (
 	github.com/klauspost/compress v1.11.4 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/lib/pq v1.9.0
+	github.com/mxschmitt/playwright-go v0.171.1
 	github.com/ory/dockertest/v3 v3.6.3
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/stretchr/testify v1.7.0
