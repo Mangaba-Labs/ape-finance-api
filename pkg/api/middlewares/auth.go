@@ -1,4 +1,4 @@
-package middleware
+package middlewares
 
 import (
 	"os"
@@ -7,6 +7,7 @@ import (
 	jwt "github.com/gofiber/jwt/v2"
 )
 
+// Protected middleware to our endpoints
 func Protected() fiber.Handler {
 	secret := os.Getenv("TOKEN_SECRET")
 
