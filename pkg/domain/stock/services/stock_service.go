@@ -9,6 +9,7 @@ import (
 type StockService interface {
 	CreateStock(stock *model.StockModel) error
 	CheckIfExists(bvmf string) (model.StockModel, error)
+	GetStocks(userID int) ([]model.StockResponse, error)
 }
 
 // NewUserService returns a UserService implementation

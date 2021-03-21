@@ -14,7 +14,12 @@ type Repository struct {
 
 // FindAllByID find all user's stocks by ID
 func (r Repository) FindAllByID(id int) (stocks []model.StockModel, err error) {
-	return
+	result := r.DB.Where("id_user = ?", id).Find(&stocks)
+	err = result.Error
+	if err != nil {
+		return nil, err
+	}
+	return stocks, nil
 }
 
 // Create stock in database

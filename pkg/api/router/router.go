@@ -57,4 +57,5 @@ func (s *Server) SetupRoutes(app *fiber.App) {
 	// Stock
 	stock := v1.Group("/stock")
 	stock.Post("/", middleware.Protected(), s.stockHandler.CreateStock)
+	stock.Get("/", middleware.Protected(), s.stockHandler.GetStocks)
 }

@@ -18,14 +18,28 @@ type StockResponse struct {
 	Bvmf      string  `json:"bvmf"`
 	Company   string  `json:"company"`
 	NowPrice  float32 `json:"now_price"`
+	Quantity  int     `json:"quantity"`
 	Variation string  `json:"variation"`
 }
 
+type VariableData struct {
+	Variation string
+	Price     float32
+}
+
 // ParseModelToResponse from scrapStock
-func (s *StockResponse) ParseModelToResponse(stock StockModel, priceNow float32, variation string) {
+func (s *StockResponse) ParseModelToResponse(stock StockModel, scrappedData VariableData) {
 	s.BuyPrice = stock.BuyPrice
 	s.Bvmf = stock.Bvmf
-	// s.ID = int(stock.ID)
-	s.NowPrice = priceNow
-	s.Variation = variation
+	s.NowPrice = scrappedData.Price
+	s.Variation = scrappedData.Variation
+	s.Quantity = stock.Quantity
 }
+
+// -> Abrir o browser
+// --> Loop chamando os workers, cada workers será uma stock
+// --> Cada worker abrirá uma página no mesmo browser
+
+// -> Fechar browser Após terminar os workers
+
+// -> Parse de model para response
