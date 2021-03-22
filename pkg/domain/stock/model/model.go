@@ -34,12 +34,5 @@ func (s *StockResponse) ParseModelToResponse(stock StockModel, scrappedData Vari
 	s.NowPrice = scrappedData.Price
 	s.Variation = scrappedData.Variation
 	s.Quantity = stock.Quantity
+	s.Company = stock.Company
 }
-
-// -> Abrir o browser
-// --> Loop chamando os workers, cada workers será uma stock
-// --> Cada worker abrirá uma página no mesmo browser
-
-// -> Fechar browser Após terminar os workers
-
-// -> Parse de model para response
