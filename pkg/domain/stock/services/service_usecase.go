@@ -149,19 +149,6 @@ func scrapStock(browser playwright.Browser, bvmf string) (scrapped model.Variabl
 	return scrapped, nil
 }
 
-// Instance a new browser
-func openBrowser() (browser playwright.Browser, err error) {
-	pw, err := playwright.Run()
-	if err != nil {
-		return
-	}
-	browser, err = pw.Chromium.Launch()
-	if err != nil {
-		return
-	}
-	return
-}
-
 // Async method to get scrapped data and parse to stockResponse
 func worker(wg *sync.WaitGroup, browser playwright.Browser, stock model.StockModel, stockResponse *[]model.StockResponse) {
 	defer wg.Done()
