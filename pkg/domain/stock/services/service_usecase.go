@@ -33,7 +33,6 @@ func (s Service) GetStocks(userID int) ([]model.StockResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	// stockResponse := &model.StockResponse{}
 	pw, err := playwright.Run()
 	if err != nil {
 		return nil, err
@@ -124,6 +123,20 @@ func scrapStock(browser playwright.Browser, bvmf string) (scrapped model.Variabl
 	if _, err = page.Goto(searchPage); err != nil {
 		log.Fatalf("could not goto: %v", err)
 	}
+	imageEntry, err := page.QuerySelectorAll("img.tv-circle-logo.tv-circle-logo--large.tv-category-header__icon")
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	image, err := imageEntry[0].GetAttribute("src")
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
 	// Variation
 	variationValuesEntry, err := page.QuerySelectorAll("div.js-symbol-change-direction.tv-symbol-price-quote__change")
 	if err != nil {
@@ -144,6 +157,7 @@ func scrapStock(browser playwright.Browser, bvmf string) (scrapped model.Variabl
 	value, err := valueEntry[0].InnerText()
 	price, _ := strconv.ParseFloat(value, 2)
 
+	scrapped.Image = image
 	scrapped.Price = float32(price)
 	scrapped.Variation = variation
 	return scrapped, nil

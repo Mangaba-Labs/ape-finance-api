@@ -20,11 +20,13 @@ type StockResponse struct {
 	NowPrice  float32 `json:"now_price"`
 	Quantity  int     `json:"quantity"`
 	Variation string  `json:"variation"`
+	Image     string  `json:"image"`
 }
 
 type VariableData struct {
 	Variation string
 	Price     float32
+	Image     string
 }
 
 // ParseModelToResponse from scrapStock
@@ -35,4 +37,5 @@ func (s *StockResponse) ParseModelToResponse(stock StockModel, scrappedData Vari
 	s.Variation = scrappedData.Variation
 	s.Quantity = stock.Quantity
 	s.Company = stock.Company
+	s.Image = scrappedData.Image
 }
