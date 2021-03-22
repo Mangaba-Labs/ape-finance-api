@@ -47,3 +47,14 @@ func (h *Handler) CreateStock(c *fiber.Ctx) error {
 	}
 	return nil
 }
+
+// GetStocks get all regiters in database
+func (h *Handler) GetStocks(c *fiber.Ctx) error {
+	identity := utils.GetTokenValue(c, "identity")
+	userID := int(identity.(float64))
+	stocks, err := h.service.GetStocks(userID)
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"status": "error", "message": "Service current unavailable!"})
+	}
+	return c.Status(201).JSON(fiber.Map{"status": "success", "stocks": stocks})
+}
