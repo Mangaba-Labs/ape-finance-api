@@ -1,0 +1,17 @@
+insert into expense_categories (name) values ('Mercado'),
+											 ('Educação'),
+                                             ('Roupas'),
+                                             ('Entretenimento'),
+                                             ('Saúde'),
+                                             ('Pets'),
+                                             ('Compras'),
+                                             ('Impostos'),
+                                             ('Trabalho'),
+                                             ('Viagem'),
+                                             ('Contas'),
+                                             ('Casa'),
+                                             ('Bares e restaurantes'),
+                                             ('Filhos'),
+                                             ('Cuidados pessoais'),
+                                             ('Transporte');
+                                            
