@@ -1,6 +1,8 @@
 package service
 
 import (
+	"fmt"
+
 	"github.com/Mangaba-Labs/ape-finance-api/pkg/api/models"
 	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/model"
 	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/repository"
@@ -23,13 +25,14 @@ func (c *CategoryServiceImpl) CreateCategory(category *model.Category) (apiRespo
 }
 
 // DeleteCategory service implementation
-func (c *CategoryServiceImpl) DeleteCategory(ID int) (apiResponse models.ApiResponse) {
+func (c *CategoryServiceImpl) DeleteCategory(ID string) (apiResponse models.ApiResponse) {
 	_, err := c.categoryRepository.FindByID(ID)
 	if err != nil {
 		apiResponse.Set("Error", "Category not found", 404)
 	}
 	err = c.categoryRepository.Delete(ID)
 	if err != nil {
+		fmt.Println(err)
 		apiResponse.Set("Error", "Could not delete category", 500)
 	} else {
 		apiResponse.Set("Success", "Deleted", 200)

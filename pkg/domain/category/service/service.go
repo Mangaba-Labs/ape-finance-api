@@ -9,7 +9,7 @@ import (
 // CategoryService contract
 type CategoryService interface {
 	CreateCategory(category *model.Category) models.ApiResponse
-	DeleteCategory(ID int) models.ApiResponse
+	DeleteCategory(ID string) models.ApiResponse
 	EditCategory(category *model.Category) error
 	GetCategories(ID int) ([]model.CategoryResponse, models.ApiResponse)
 }

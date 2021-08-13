@@ -17,8 +17,8 @@ func (c *CategoryRepositoryImpl) Create(category *model.Category) error {
 }
 
 // Delete repository implementation in category DELETE
-func (c *CategoryRepositoryImpl) Delete(ID int) error {
-	result := c.DB.Delete(&model.Category{}).Where("id = ?", ID)
+func (c *CategoryRepositoryImpl) Delete(ID string) error {
+	result := c.DB.Where("id = ?", ID).Delete(&model.Category{})
 	return result.Error
 }
 
@@ -28,7 +28,7 @@ func (c *CategoryRepositoryImpl) Edit(*model.Category) error {
 }
 
 // FindByID repository implementation
-func (c *CategoryRepositoryImpl) FindByID(ID int) (category model.Category, err error) {
+func (c *CategoryRepositoryImpl) FindByID(ID string) (category model.Category, err error) {
 	result := c.DB.Find(&category).Where("id = ?", ID)
 	return category, result.Error
 }

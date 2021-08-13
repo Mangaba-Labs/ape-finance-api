@@ -8,9 +8,9 @@ import (
 // CategoryRepository contract
 type CategoryRepository interface {
 	Create(*model.Category) error
-	Delete(ID int) error
+	Delete(ID string) error
 	Edit(*model.Category) error
-	FindByID(ID int) (model.Category, error)
+	FindByID(ID string) (model.Category, error)
 	FindAllByUser(ID int) ([]model.Category, error)
 }
 

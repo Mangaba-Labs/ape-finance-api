@@ -40,7 +40,7 @@ func (h *CategoryHandlerImpl) EditCategory(c *fiber.Ctx) error {
 
 // DeleteCategory implementation
 func (h *CategoryHandlerImpl) DeleteCategory(c *fiber.Ctx) error {
-	response := h.service.DeleteCategory(utils.GetUserID(c))
+	response := h.service.DeleteCategory((c.Params("id")))
 	return setupResponse(c, response.HttpCode, response.Status, response.Message)
 }
 
