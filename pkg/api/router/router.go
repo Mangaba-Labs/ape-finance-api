@@ -6,6 +6,7 @@ import (
 	"github.com/Mangaba-Labs/ape-finance-api/pkg/api/handler"
 	middleware "github.com/Mangaba-Labs/ape-finance-api/pkg/api/middlewares"
 	auth "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/auth/handler"
+	category "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/handler"
 	stock "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/stock/handler"
 	userHandler "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/handler"
 	"github.com/gofiber/fiber/v2"
@@ -14,14 +15,15 @@ import (
 
 // Server structure
 type Server struct {
-	userHandler  userHandler.Handler
-	authHandler  auth.AuthHandler
-	stockHandler stock.Handler
+	userHandler     userHandler.Handler
+	authHandler     auth.AuthHandler
+	stockHandler    stock.Handler
+	categoryHandler category.CategoryHandler
 }
 
 // NewServer instance
-func NewServer(userHandler userHandler.Handler, authHandler auth.AuthHandler, stockHandler stock.Handler) *Server {
-	return &Server{userHandler: userHandler, authHandler: authHandler, stockHandler: stockHandler}
+func NewServer(userHandler userHandler.Handler, authHandler auth.AuthHandler, stockHandler stock.Handler, categoryHandler category.CategoryHandler) *Server {
+	return &Server{userHandler: userHandler, authHandler: authHandler, stockHandler: stockHandler, categoryHandler: categoryHandler}
 }
 
 // SetupRoutes setup router pkg
@@ -58,4 +60,11 @@ func (s *Server) SetupRoutes(app *fiber.App) {
 	stock := v1.Group("/stock")
 	stock.Post("/", middleware.Protected(), s.stockHandler.CreateStock)
 	stock.Get("/", middleware.Protected(), s.stockHandler.GetStocks)
+
+	// Category
+	category := v1.Group("/categories", middleware.Protected())
+	category.Delete("/:id", middleware.Protected(), s.categoryHandler.DeleteCategory)
+	category.Get("/", middleware.Protected(), s.categoryHandler.GetCategories)
+	category.Post("/", middleware.Protected(), s.categoryHandler.CreateCategory)
+	category.Put("/:id", middleware.Protected(), s.categoryHandler.EditCategory)
 }

@@ -9,6 +9,9 @@ import (
 	"github.com/Mangaba-Labs/ape-finance-api/database"
 	"github.com/Mangaba-Labs/ape-finance-api/pkg/api/router"
 	handler3 "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/auth/handler"
+	handler5 "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/handler"
+	repositoryCategory "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/repository"
+	servicesCategory "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/service"
 	handler4 "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/stock/handler"
 	repositoryStock "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/stock/repository"
 	servicesStock "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/stock/services"
@@ -31,11 +34,15 @@ func initializeServer() (*router.Server, error) {
 		DB: db,
 	}
 
+	categoryRepository := repositoryCategory.NewCategoryRepository(db)
+
 	userService := services.NewUserService(userRepository)
 	handlerHandler := handler.NewUserHandler(userService)
 	authHandler := handler3.NewAuthHandler(userService)
+	categoryService := servicesCategory.NewCategoryService(categoryRepository)
+	categoryHandler := handler5.NewCategoryHandler(categoryService)
 	stockService := servicesStock.NewUserService(stockRepository)
 	stockHandler := handler4.NewStockHandler(stockService)
-	server := router.NewServer(handlerHandler, authHandler, stockHandler)
+	server := router.NewServer(handlerHandler, authHandler, stockHandler, categoryHandler)
 	return server, nil
 }
