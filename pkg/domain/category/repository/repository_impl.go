@@ -17,18 +17,23 @@ func (c *CategoryRepositoryImpl) Create(category *model.Category) error {
 }
 
 // Delete repository implementation in category DELETE
-func (c *CategoryRepositoryImpl) Delete(ID string) error {
+func (c *CategoryRepositoryImpl) Delete(ID uint) error {
 	result := c.DB.Where("id = ?", ID).Delete(&model.Category{})
 	return result.Error
 }
 
 // Edit repository implementation in category PUT
-func (c *CategoryRepositoryImpl) Edit(*model.Category) error {
-	return nil
+func (c *CategoryRepositoryImpl) Edit(category *model.Category) error {
+	var oldCategory model.Category
+	c.DB.Where("id = ?", category.ID).Find(&oldCategory)
+	oldCategory.Name = category.Name
+	oldCategory.Type = category.Type
+	result := c.DB.Save(&oldCategory)
+	return result.Error
 }
 
 // FindByID repository implementation
-func (c *CategoryRepositoryImpl) FindByID(ID string) (category model.Category, err error) {
+func (c *CategoryRepositoryImpl) FindByID(ID uint) (category model.Category, err error) {
 	result := c.DB.Find(&category).Where("id = ?", ID)
 	return category, result.Error
 }

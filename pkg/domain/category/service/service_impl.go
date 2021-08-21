@@ -25,7 +25,7 @@ func (c *CategoryServiceImpl) CreateCategory(category *model.Category) (apiRespo
 }
 
 // DeleteCategory service implementation
-func (c *CategoryServiceImpl) DeleteCategory(ID string) (apiResponse models.ApiResponse) {
+func (c *CategoryServiceImpl) DeleteCategory(ID uint) (apiResponse models.ApiResponse) {
 	_, err := c.categoryRepository.FindByID(ID)
 	if err != nil {
 		apiResponse.Set("Error", "Category not found", 404)
@@ -41,8 +41,18 @@ func (c *CategoryServiceImpl) DeleteCategory(ID string) (apiResponse models.ApiR
 }
 
 // EditCategory service implementation
-func (c *CategoryServiceImpl) EditCategory(category *model.Category) error {
-	return nil
+func (c *CategoryServiceImpl) EditCategory(category *model.Category) (apiResponse models.ApiResponse) {
+	_, err := c.categoryRepository.FindByID(category.ID)
+	if err != nil {
+		apiResponse.Set("Error", "Category not found", 404)
+	}
+	err = c.categoryRepository.Edit(category)
+	if err != nil {
+		apiResponse.Set("Error", "Could not update category", 500)
+	} else {
+		apiResponse.Set("Success", "Updated", 200)
+	}
+	return apiResponse
 }
 
 // GetCategories service implementation
