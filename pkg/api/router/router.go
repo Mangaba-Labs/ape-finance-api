@@ -8,6 +8,7 @@ import (
 	auth "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/auth/handler"
 	category "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/handler"
 	stock "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/stock/handler"
+	transaction "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/transaction/handler"
 	userHandler "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/handler"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
@@ -15,15 +16,16 @@ import (
 
 // Server structure
 type Server struct {
-	userHandler     userHandler.Handler
-	authHandler     auth.AuthHandler
-	stockHandler    stock.Handler
-	categoryHandler category.CategoryHandler
+	userHandler        userHandler.Handler
+	authHandler        auth.AuthHandler
+	stockHandler       stock.Handler
+	categoryHandler    category.CategoryHandler
+	transactionHandler transaction.TransactionHandler
 }
 
 // NewServer instance
-func NewServer(userHandler userHandler.Handler, authHandler auth.AuthHandler, stockHandler stock.Handler, categoryHandler category.CategoryHandler) *Server {
-	return &Server{userHandler: userHandler, authHandler: authHandler, stockHandler: stockHandler, categoryHandler: categoryHandler}
+func NewServer(userHandler userHandler.Handler, authHandler auth.AuthHandler, stockHandler stock.Handler, categoryHandler category.CategoryHandler, transactionHandler transaction.TransactionHandler) *Server {
+	return &Server{userHandler: userHandler, authHandler: authHandler, stockHandler: stockHandler, categoryHandler: categoryHandler, transactionHandler: transactionHandler}
 }
 
 // SetupRoutes setup router pkg
@@ -57,14 +59,21 @@ func (s *Server) SetupRoutes(app *fiber.App) {
 	user.Put("/:id", s.userHandler.EditUser)
 
 	// Stock
-	stock := v1.Group("/stock")
-	stock.Post("/", middleware.Protected(), s.stockHandler.CreateStock)
-	stock.Get("/", middleware.Protected(), s.stockHandler.GetStocks)
+	stock := v1.Group("/stock", middleware.Protected())
+	stock.Post("/", s.stockHandler.CreateStock)
+	stock.Get("/", s.stockHandler.GetStocks)
 
 	// Category
 	category := v1.Group("/categories", middleware.Protected())
-	category.Delete("/:id", middleware.Protected(), s.categoryHandler.DeleteCategory)
-	category.Get("/", middleware.Protected(), s.categoryHandler.GetCategories)
-	category.Post("/", middleware.Protected(), s.categoryHandler.CreateCategory)
-	category.Put("/:id", middleware.Protected(), s.categoryHandler.EditCategory)
+	category.Delete("/:id", s.categoryHandler.DeleteCategory)
+	category.Get("/", s.categoryHandler.GetCategories)
+	category.Post("/", s.categoryHandler.CreateCategory)
+	category.Put("/:id", s.categoryHandler.EditCategory)
+
+	// Transaction
+	transaction := v1.Group("/transactions", middleware.Protected())
+	transaction.Delete("/:id", s.transactionHandler.Delete)
+	transaction.Get("", s.transactionHandler.FindAll)
+	transaction.Post("", s.transactionHandler.Add)
+	transaction.Put("/:id", s.transactionHandler.Edit)
 }

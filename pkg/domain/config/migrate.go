@@ -4,9 +4,8 @@ import (
 	"log"
 
 	category "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/model"
-	expense "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/expense/model"
-	income "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/income/model"
 	stock "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/stock/model"
+	transaction "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/transaction/model"
 	user "github.com/Mangaba-Labs/ape-finance-api/pkg/domain/user/model"
 	"gorm.io/gorm"
 )
@@ -19,7 +18,7 @@ type Migrate struct {
 // MigrateAll database migration
 func (m *Migrate) MigrateAll() (err error) {
 	log.Println("Migrating database... 🤞")
-	err = m.DB.AutoMigrate(&user.User{}, &stock.StockModel{}, &expense.ExpenseModel{}, &expense.ExpenseCategories{}, &income.IncomeModel{}, &income.IncomeCategories{}, &category.Category{})
+	err = m.DB.AutoMigrate(&user.User{}, &stock.StockModel{}, &transaction.Transaction{}, &category.Category{})
 
 	if err != nil {
 		log.Fatal("Something went wrong on db migration process...\n ", err)

@@ -1,8 +1,6 @@
 package service
 
 import (
-	"fmt"
-
 	"github.com/Mangaba-Labs/ape-finance-api/pkg/api/models"
 	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/model"
 	"github.com/Mangaba-Labs/ape-finance-api/pkg/domain/category/repository"
@@ -32,7 +30,6 @@ func (c *CategoryServiceImpl) DeleteCategory(ID uint) (apiResponse models.ApiRes
 	}
 	err = c.categoryRepository.Delete(ID)
 	if err != nil {
-		fmt.Println(err)
 		apiResponse.Set("Error", "Could not delete category", 500)
 	} else {
 		apiResponse.Set("Success", "Deleted", 200)
@@ -56,7 +53,7 @@ func (c *CategoryServiceImpl) EditCategory(category *model.Category) (apiRespons
 }
 
 // GetCategories service implementation
-func (c *CategoryServiceImpl) GetCategories(ID int) (categoriesResponse []model.CategoryResponse, apiResponse models.ApiResponse) {
+func (c *CategoryServiceImpl) GetCategories(ID uint64) (categoriesResponse []model.CategoryResponse, apiResponse models.ApiResponse) {
 	categories, err := c.categoryRepository.FindAllByUser(ID)
 	if err != nil {
 		apiResponse.Set("Error", "Could not get your categories", 500)

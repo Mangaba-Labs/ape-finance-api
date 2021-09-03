@@ -11,7 +11,7 @@ type CategoryService interface {
 	CreateCategory(category *model.Category) models.ApiResponse
 	DeleteCategory(ID uint) models.ApiResponse
 	EditCategory(category *model.Category) models.ApiResponse
-	GetCategories(ID int) ([]model.CategoryResponse, models.ApiResponse)
+	GetCategories(ID uint64) ([]model.CategoryResponse, models.ApiResponse)
 }
 
 // NewCategoryService constructor

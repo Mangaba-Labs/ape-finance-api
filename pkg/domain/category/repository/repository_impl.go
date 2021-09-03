@@ -39,7 +39,7 @@ func (c *CategoryRepositoryImpl) FindByID(ID uint) (category model.Category, err
 }
 
 // FindAllByUser repository implementation in GET categories
-func (c *CategoryRepositoryImpl) FindAllByUser(ID int) (categories []model.Category, err error) {
+func (c *CategoryRepositoryImpl) FindAllByUser(ID uint64) (categories []model.Category, err error) {
 	result := c.DB.Find(&categories).Where("id_user = ?", ID)
 	return categories, result.Error
 }
