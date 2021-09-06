@@ -14,9 +14,9 @@ func GetTokenValue(c *fiber.Ctx, key string) interface{} {
 }
 
 // GetUserID from Authroization token
-func GetUserID(c *fiber.Ctx) int {
+func GetUserID(c *fiber.Ctx) uint64 {
 	decoded := c.Locals("user").(*jwt.Token)
 	userInfo := decoded.Claims.(jwt.MapClaims)
 	value := userInfo["identity"]
-	return int(value.(float64))
+	return uint64(value.(float64))
 }

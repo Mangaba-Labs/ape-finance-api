@@ -11,7 +11,7 @@ type CategoryRepository interface {
 	Delete(ID uint) error
 	Edit(*model.Category) error
 	FindByID(ID uint) (model.Category, error)
-	FindAllByUser(ID int) ([]model.Category, error)
+	FindAllByUser(ID uint64) ([]model.Category, error)
 }
 
 // NewCategoryRepository constructor
