@@ -10,6 +10,7 @@ type TransactionServiceImpl struct {
 	transactionRepository repository.TransactionRepository
 }
 
+// Create service to add a new transaction
 func (t *TransactionServiceImpl) Create(transaction *model.Transaction) (apiResponse models.ApiResponse) {
 	err := t.transactionRepository.Create(transaction)
 	if err != nil {
@@ -20,6 +21,7 @@ func (t *TransactionServiceImpl) Create(transaction *model.Transaction) (apiResp
 	return apiResponse
 }
 
+// Delete service to delete transaction
 func (t *TransactionServiceImpl) Delete(ID uint) (apiResponse models.ApiResponse) {
 	_, err := t.transactionRepository.FindByID(ID)
 	if err != nil {
@@ -34,10 +36,22 @@ func (t *TransactionServiceImpl) Delete(ID uint) (apiResponse models.ApiResponse
 	return apiResponse
 }
 
-func (t *TransactionServiceImpl) Edit(transaction *model.Transaction) models.ApiResponse {
-	return models.ApiResponse{}
+// Edit service to edit transaction
+func (t *TransactionServiceImpl) Edit(transaction *model.Transaction) (apiResponse models.ApiResponse) {
+	_, err := t.transactionRepository.FindByID(transaction.ID)
+	if err != nil {
+		apiResponse.Set("Error", "Transaction not found", 404)
+	}
+	err = t.transactionRepository.Update(transaction)
+	if err != nil {
+		apiResponse.Set("Error", "Could not update transaction", 500)
+	} else {
+		apiResponse.Set("Success", "Updated", 200)
+	}
+	return apiResponse
 }
 
+// GetAllByUser service to get all transactions by a selected user
 func (t *TransactionServiceImpl) GetAllByUser(ID uint64) (transactionsResponse []model.TransactionResponse, apiResponse models.ApiResponse) {
 	transactions, err := t.transactionRepository.FindAllByUser(ID)
 	if err != nil {

@@ -36,7 +36,12 @@ func (i *TransactionHandlerImpl) Edit(c *fiber.Ctx) error {
 	if err := c.BodyParser(transaction); err != nil {
 		return setupResponse(c, 400, "error", "Bad Request!")
 	}
-	return setupResponse(c, 200, "success", "Nothing happens!")
+	id, err := strconv.Atoi(c.Params("id"))
+	if !transaction.IsValidFields() || err != nil || id != int(transaction.ID) {
+		return setupResponse(c, 400, "error", "Bad Request!")
+	}
+	response := i.service.Edit(transaction)
+	return setupResponse(c, response.HttpCode, response.Status, response.Message)
 }
 
 func (i *TransactionHandlerImpl) Delete(c *fiber.Ctx) error {
@@ -52,6 +57,6 @@ func setupResponse(c *fiber.Ctx, httpCode int, status string, message string) er
 	return c.Status(httpCode).JSON(fiber.Map{"status": status, "message": message})
 }
 
-func setupResponseWithItems(c *fiber.Ctx, httpCode int, status string, message string, categories []model.TransactionResponse) error {
-	return c.Status(httpCode).JSON(fiber.Map{"status": status, "message": message, "categories": categories})
+func setupResponseWithItems(c *fiber.Ctx, httpCode int, status string, message string, transactions []model.TransactionResponse) error {
+	return c.Status(httpCode).JSON(fiber.Map{"status": status, "message": message, "transactons": transactions})
 }
