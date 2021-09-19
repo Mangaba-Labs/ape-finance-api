@@ -8,12 +8,12 @@ import (
 )
 
 // Repository concrete type
-type Repository struct {
+type StockRepositoryImpl struct {
 	DB *gorm.DB
 }
 
 // FindAllByID find all user's stocks by ID
-func (r Repository) FindAllByID(id int) (stocks []model.StockModel, err error) {
+func (r StockRepositoryImpl) FindAllByID(id int) (stocks []model.StockModel, err error) {
 	result := r.DB.Where("id_user = ?", id).Find(&stocks)
 	err = result.Error
 	if err != nil {
@@ -23,7 +23,7 @@ func (r Repository) FindAllByID(id int) (stocks []model.StockModel, err error) {
 }
 
 // Create stock in database
-func (r Repository) Create(stock *model.StockModel) (err error) {
+func (r StockRepositoryImpl) Create(stock *model.StockModel) (err error) {
 	result := r.DB.Create(&stock)
 	err = result.Error
 	rowsCount := result.RowsAffected
@@ -34,12 +34,13 @@ func (r Repository) Create(stock *model.StockModel) (err error) {
 }
 
 // Delete stock in database
-func (r Repository) Delete(id int) (err error) {
-	return
+func (r StockRepositoryImpl) Delete(id int) (err error) {
+	result := r.DB.Where("id = ?", id).Delete(&model.StockModel{})
+	return result.Error
 }
 
 // FindByBvmf to check if stock is already in our database before use our crawler
-func (r Repository) FindByBvmf(bvmf string) (stock model.StockModel, err error) {
+func (r StockRepositoryImpl) findByBvmf(bvmf string) (stock model.StockModel, err error) {
 	result := r.DB.First(&stock, "bvmf = ?", bvmf)
 	err = result.Error
 	return

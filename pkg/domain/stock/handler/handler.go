@@ -8,13 +8,15 @@ import (
 
 // StockHandler interface
 type StockHandler interface {
-	CreateStock(c *fiber.Ctx) error
-	GetStocks(c *fiber.Ctx) ([]model.StockResponse, error)
+	Post(c *fiber.Ctx) error
+	Get(c *fiber.Ctx) ([]model.StockResponse, error)
+	Put(c *fiber.Ctx) error
+	Delete(c *fiber.Ctx) error
 }
 
 // NewStockHandler returns a pointer to an handler impl
 func NewStockHandler(s services.StockService) Handler {
-	return Handler{
+	return StockHandlerImpl{
 		service: s,
 	}
 }
